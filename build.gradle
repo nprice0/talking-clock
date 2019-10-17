@@ -1,0 +1,65 @@
+
+description = "Talking-Clock Application"
+
+defaultTasks "clean", "check"
+
+
+allprojects {
+    apply plugin: 'java'
+    group = 'com.play.talkingclock'
+    version = '0.0.1-SNAPSHOT'
+}
+
+subprojects{
+    apply plugin: "jacoco"
+    apply plugin: "project-report"
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    repositories {
+        mavenCentral()
+    }
+    
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.compilerArgs = ["-Xlint:none"]
+    }
+
+    tasks.withType(Test) {
+        maxParallelForks=1
+
+        reports.html.enabled = true
+        reports.junitXml.enabled = true
+
+        include "**/*Test.class", "**/*Tests.class"
+    }
+    
+    jacocoTestReport {
+        dependsOn check
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.destination file("${buildDir}/reports/jacoco")
+        }
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+
+plugins {
+    id 'org.springframework.boot' version '2.1.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+}
+
+description = "Talking-Clock Web"
+
+
+springBoot {
+    mainClassName = "com.play.talkingclock.TalkingClockWebApplication"
+    buildInfo()
+}
+
+bootJar{
+    manifest {
+        attributes(
+                'Name': project.name,
+                'Version': project.version,
+                'Built-With': 'Gradle v${project.getGradle().getGradleVersion()}',
+                'Build-Time': new Date().toString(),
+                'Created-By': System.properties['java.version'] + ' (' + System.properties['java.vendor'] + ')'
+        )
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    options.compilerArgs = ["-Xlint:none"]
+}
+
+
+tasks.withType(Test) {
+    maxParallelForks=1
+
+    reports.html.enabled = true
+    reports.junitXml.enabled = true
+
+    include "**/*Test.class", "**/*Tests.class"
+}
+
+
+dependencies {
+    compile project(":services")
+    
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+
+
+
+
+

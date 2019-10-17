@@ -1,0 +1,4 @@
+rootProject.name = 'talking-clock'
+include 'services'
+include 'web'
+
