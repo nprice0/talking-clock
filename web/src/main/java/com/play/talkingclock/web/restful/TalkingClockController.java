@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 public class TalkingClockController {
@@ -31,9 +32,12 @@ public class TalkingClockController {
 
         String translatedTime = talkingClockService.translateToHumanFriendly(localTime);
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedDate = dateTimeFormatter.format(localTime);
+
         TimeIO timeIO = new TimeIO();
         timeIO.setHumanFriendlyTime(translatedTime);
-        timeIO.setNumericTime(localTime.toString());
+        timeIO.setNumericTime(formattedDate);
 
         return timeIO;
     }
