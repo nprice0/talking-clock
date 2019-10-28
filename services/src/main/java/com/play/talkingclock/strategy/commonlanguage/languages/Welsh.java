@@ -6,9 +6,9 @@ public class Welsh implements Language {
 
     private final String[] units = {"", "un", "dau", "tri", "pedwar", "pump", "chwech", "saith", "wyth", "naw", "deg", "undeg un", "undeg dau", "undeg tri", "undeg pedwar", "chwarter", "undeg chwech", "undeg saith", "undeg wyth", "undeg naw"};
 
-    private final String[] tens = {"", "", "dauddeg", "hanner awr"};
+    private final String[] tens = {"", "", "ugain", "hanner awr"};
 
-    private final String[] hours = {"undeg dau", "un", "dau", "tri", "pedwar", "pump", "chwech", "saith", "wyth", "naw", "deg", "undeg un"};
+    private final String[] hours = {"deuddeg", "un", "dau", "tri", "pedwar", "pump", "chwech", "saith", "wyth", "naw", "deg", "un ar ddeg"};
 
     @Override
     public String[] getUnits() {
