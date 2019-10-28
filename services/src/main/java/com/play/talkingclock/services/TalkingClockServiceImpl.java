@@ -32,7 +32,9 @@ public class TalkingClockServiceImpl implements TalkingClockService {
      * @return
      */
     private TimeStrategy getTimeStrategy(String name){
-        if (timeStrategyMap.containsKey(name)){
+        if (timeStrategyMap ==null){
+            return null;
+        }else if (timeStrategyMap.containsKey(name)){
             return timeStrategyMap.get(name);
         }else if (!timeStrategyMap.isEmpty()){
             return timeStrategyMap.entrySet().stream().findFirst().get().getValue();

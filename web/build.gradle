@@ -45,10 +45,10 @@ tasks.withType(Test) {
 
 
 dependencies {
-    implementation project(":services")
+    compile project(":services")
     
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
 

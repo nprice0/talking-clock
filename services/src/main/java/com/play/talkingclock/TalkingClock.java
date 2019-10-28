@@ -2,11 +2,11 @@ package com.play.talkingclock;
 
 import com.play.talkingclock.io.TimeIO;
 import com.play.talkingclock.services.TalkingClockService;
-import com.play.talkingclock.services.TalkingClockServiceImpl;
 import com.play.talkingclock.strategy.EnglishNaturalLanguageStrategy;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,18 +14,19 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-@Configuration
-@ComponentScan(basePackages = {"com.play.talkingclock"})
-public class TalkingClock {
 
-    private static ApplicationContext applicationContext;
+@Configuration
+@ComponentScan(basePackages = {"com.play.talkingclock.services","com.play.talkingclock.strategy"})
+public class TalkingClock {
 
     @Autowired
     TalkingClockService talkingClockService;
 
-    public static void main(String args[]) throws Exception {
 
-        TalkingClock tc = new TalkingClock();
+    public static void main(String args[]) throws Exception {
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(TalkingClock.class);
+        TalkingClock tc = applicationContext.getBean(TalkingClock.class);
+
         tc.run(args);
     }
 
@@ -36,8 +37,6 @@ public class TalkingClock {
      * @throws Exception
      */
     private void run(String[] args) throws Exception {
-
-        talkingClockService = new TalkingClockServiceImpl();
 
         Options posixOptions = new CommandLineOptionsBuilder().getOptions();
         CommandLine cmd = getCommandLineArgs(posixOptions, args);
@@ -66,7 +65,6 @@ public class TalkingClock {
         String translatedTime = talkingClockService.translateToHumanFriendly(localTime, EnglishNaturalLanguageStrategy.class.getSimpleName());
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         String formattedDate = dateTimeFormatter.format(localTime);
-
 
         TimeIO timeIO = new TimeIO();
         timeIO.setHumanFriendlyTime(translatedTime);
@@ -109,7 +107,7 @@ public class TalkingClock {
      */
     public void displayHelp(Options posixOptions) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(getClass().getSimpleName(), posixOptions);
+        formatter.printHelp(TalkingClock.class.getSimpleName(), posixOptions);
         System.exit(1);
     }
 
