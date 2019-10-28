@@ -16,7 +16,7 @@ import java.time.format.DateTimeParseException;
 
 
 @Configuration
-@ComponentScan(basePackages = {"com.play.talkingclock.services","com.play.talkingclock.strategy"})
+@ComponentScan(basePackages = {"com.play.talkingclock.services", "com.play.talkingclock.strategy"})
 public class TalkingClock {
 
     @Autowired
