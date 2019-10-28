@@ -4,7 +4,6 @@ import com.play.talkingclock.io.CustomErrorResponseIO;
 import com.play.talkingclock.io.TimeIO;
 import com.play.talkingclock.services.TalkingClockService;
 import com.play.talkingclock.strategy.EnglishBasicStrategy;
-import com.play.talkingclock.strategy.EnglishNaturalLanguageStrategy;
 import com.play.talkingclock.web.restful.TalkingClockController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -192,7 +191,7 @@ public class TalkingClockWebTests {
         //Set preferred time as convert to LocalTime object
         String requestedTime = "21:45";
         LocalTime requestedLocalTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
-        String strategyName = EnglishNaturalLanguageStrategy.class.getSimpleName();
+        String strategyName = "EnglishCommonLanguageStrategy";
 
         //Get the data from the response
         URI url = new URI("http://localhost:" + port + "/time?t=" + requestedTime + "&s=" + strategyName);

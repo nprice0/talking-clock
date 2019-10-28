@@ -1,28 +1,38 @@
-package com.play.talkingclock.strategy;
+package com.play.talkingclock.strategy.commonlanguage;
 
+import com.play.talkingclock.strategy.TimeStrategy;
 import org.springframework.util.StringUtils;
 
-import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Returns the time in basic English 12 hour clock
- * <p>
- * For example -
- * 01:00 --> one o'clock
- * 12:30 --> half past twelve
- * 16.05 --> five past four
- * </p>
- */
-public class EnglishNaturalLanguageStrategy implements TimeStrategy, Serializable {
+public class CommonLanguageStrategy implements TimeStrategy {
 
-    private static final String[] units = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "quarter", "sixteen", "seventeen", "eighteen", "nineteen"};
+    private final String[] units;
+    private final String[] tens;
+    private final String[] hours;
 
-    private static final String[] tens = {"", "", "twenty", "half"};
+    private final Language language;
 
-    private static final String[] hours = {"twelve", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven"};
+    public CommonLanguageStrategy(Language language) {
+        this.language = language;
+
+        this.units = language.getUnits();
+        this.tens = language.getTens();
+        this.hours = language.getHours();
+    }
+
+
+    /**
+     * Returns a friendly name for the strategy
+     *
+     * @return
+     */
+    @Override
+    public String getFriendlyStrategyName() {
+        return language.getClass().getSimpleName() + this.getClass().getSimpleName();
+    }
 
 
     /**
@@ -37,7 +47,7 @@ public class EnglishNaturalLanguageStrategy implements TimeStrategy, Serializabl
         int minute = localTime.getMinute();
 
         if (minute == 0)
-            return buildMessage(getHour(localTime), "o'clock");
+            return buildMessage(getHour(localTime), language.getOClock());
 
         else
             return buildMessage(getMinute(minute), getHint(minute), getHour(localTime));
@@ -54,9 +64,9 @@ public class EnglishNaturalLanguageStrategy implements TimeStrategy, Serializabl
         String hint;
 
         if (minute > 30)
-            hint = "to";
+            hint = language.getAfterThirty();
         else
-            hint = "past";
+            hint = language.getBeforeThirty();
 
         return hint;
     }

@@ -67,8 +67,8 @@ Write a REST service to expose the clock and allow an optional parameter to pass
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"quarter past one","numericTime":"01:15"}`  
 
-* Get the time with a given translation strategy. The following uses EnglishNaturalLanguageStrategy, this is the default.      
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15&s=EnglishNaturalLanguageStrategy`  
+* Get the time with a given translation strategy. The following uses the CommonLanguageStrategy with English Language applied, this is the default.      
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15&s=EnglishCommonLanguageStrategy`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"quarter past one","numericTime":"01:15"}`  
 
 * Get the time with a given translation strategy.  There following uses EnglishBasicStrategy.   

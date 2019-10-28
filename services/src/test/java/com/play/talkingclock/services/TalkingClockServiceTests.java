@@ -2,7 +2,6 @@ package com.play.talkingclock.services;
 
 import com.play.talkingclock.TalkingClock;
 import com.play.talkingclock.strategy.EnglishBasicStrategy;
-import com.play.talkingclock.strategy.EnglishNaturalLanguageStrategy;
 import com.play.talkingclock.strategy.TimeStrategy;
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,13 +42,13 @@ public class TalkingClockServiceTests {
     }
 
     @Test
-    public void testClockServiceHappyPathEnglishNaturalLanguageStrategy() {
+    public void testClockServiceHappyPathEnglishCommonLanguageStrategy() {
 
         //Set preferred time as convert to LocalTime object
         String requestedTime = "23:30";
         LocalTime localTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
 
-        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime, EnglishNaturalLanguageStrategy.class.getSimpleName());
+        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime, "EnglishCommonLanguageStrategy");
 
         Assert.assertEquals("half past eleven", humanFriendlyTime);
         System.out.println(humanFriendlyTime);
@@ -81,9 +80,11 @@ public class TalkingClockServiceTests {
 
     @Test
     public void testConfiguredStrategies() {
-        Assert.assertEquals(timeStrategyMap.size(), 2);
-        Assert.assertTrue(timeStrategyMap.containsKey(EnglishNaturalLanguageStrategy.class.getSimpleName()));
-        Assert.assertTrue(timeStrategyMap.containsKey(EnglishBasicStrategy.class.getSimpleName()));
+        Assert.assertEquals(timeStrategyMap.size(), 4);
+        Assert.assertTrue(timeStrategyMap.containsKey("EnglishCommonLanguageStrategy"));
+        Assert.assertTrue(timeStrategyMap.containsKey("WelshCommonLanguageStrategy"));
+        Assert.assertTrue(timeStrategyMap.containsKey("AmericanCommonLanguageStrategy"));
+        Assert.assertTrue(timeStrategyMap.containsKey("EnglishBasicStrategy"));
     }
 
 }
