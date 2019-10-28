@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -41,7 +39,7 @@ public class TalkingClock {
         talkingClockService = new TalkingClockServiceImpl();
 
         Options posixOptions = new CommandLineOptionsBuilder().getOptions();
-        CommandLine cmd = getCommandLineArgs(posixOptions,args);
+        CommandLine cmd = getCommandLineArgs(posixOptions, args);
 
         if (cmd == null)
             displayHelp(posixOptions);
@@ -50,14 +48,13 @@ public class TalkingClock {
         String[] a = cmd.getArgs();
 
 
-
         if (cmd.hasOption(CommandLineOptionsBuilder.NOW_TIME_OPTION_ARG))
             localTime = LocalTime.now();
 
         else if (cmd.hasOption(CommandLineOptionsBuilder.GIVEN_TIME_OPTION_ARG))
-            try{
+            try {
                 localTime = LocalTime.parse(cmd.getOptionValue(CommandLineOptionsBuilder.GIVEN_TIME_OPTION_ARG));
-            }catch(DateTimeParseException dateTimeParseException) {
+            } catch (DateTimeParseException dateTimeParseException) {
                 System.out.println("Error: " + dateTimeParseException.getMessage());
                 displayHelp(posixOptions);
             }
