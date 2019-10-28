@@ -1,13 +1,11 @@
 package com.play.talkingclock.services;
 
-import com.play.talkingclock.services.TalkingClockService;
-import java.time.LocalTime;
-import java.util.Map;
-import java.util.Optional;
-
 import com.play.talkingclock.strategy.TimeStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalTime;
+import java.util.Map;
 
 @Service
 public class TalkingClockServiceImpl implements TalkingClockService {
@@ -30,16 +28,18 @@ public class TalkingClockServiceImpl implements TalkingClockService {
      * @param name
      * @return
      */
-    private TimeStrategy getTimeStrategy(String name){
-        if (timeStrategyMap ==null){
-            return null;
-        }else if (timeStrategyMap.containsKey(name)){
-            return timeStrategyMap.get(name);
-        }else if (!timeStrategyMap.isEmpty()){
-            return timeStrategyMap.entrySet().stream().findFirst().get().getValue();
-        }else{
-            return null;
+    private TimeStrategy getTimeStrategy(String name) {
+        TimeStrategy timeStrategy = null;
+
+        if (timeStrategyMap != null && !timeStrategyMap.isEmpty()) {
+
+            if (timeStrategyMap.containsKey(name)) {
+                timeStrategy = timeStrategyMap.get(name);
+            } else if (!timeStrategyMap.isEmpty()) {
+                timeStrategy = timeStrategyMap.entrySet().stream().findFirst().get().getValue();
+            }
         }
+        return timeStrategy;
     }
 
 }

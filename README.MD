@@ -67,14 +67,21 @@ Write a REST service to expose the clock and allow an optional parameter to pass
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"quarter past one","numericTime":"01:15"}`  
 
-* Get the time with a given translation strategy. The following uses the CommonLanguageStrategy with English Language applied, this is the default.      
+* Get the time with a given translation strategy by using the `s` url paramter. The following uses the EnglishCommonLanguageStrategy, note this is the default translation strategy         
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15&s=EnglishCommonLanguageStrategy`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"quarter past one","numericTime":"01:15"}`  
 
-* Get the time with a given translation strategy.  There following uses EnglishBasicStrategy.   
+* Get the time with the AmericanCommonLanguageStrategy   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15&s=AmericanCommonLanguageStrategy`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"quarter after one","numericTime":"01:15"}`
+
+* Get the time with the WelshCommonLanguageStrategy   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15&s=WelshCommonLanguageStrategy`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"chwarter wedi un","numericTime":"01:15"}`  
+
+* Get the time with the EnglishBasicStrategy   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15&s=EnglishBasicStrategy`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"one fifteen am","numericTime":"01:15"}`  
-
 
 * Error handling  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=99:30`   
