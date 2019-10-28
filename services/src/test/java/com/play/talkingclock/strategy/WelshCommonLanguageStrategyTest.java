@@ -16,7 +16,7 @@ public class WelshCommonLanguageStrategyTest {
         TimeStrategy welshCommonLanguageStrategy = new CommonLanguageStrategy(new Welsh());
 
         LocalTime localTime = LocalTime.of(0, 0);
-        assertEquals("deuddeg o'r gloch", welshCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("hanner nos", welshCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(11, 0);
         assertEquals("un ar ddeg o'r gloch", welshCommonLanguageStrategy.getTimeInWords(localTime));
@@ -30,7 +30,7 @@ public class WelshCommonLanguageStrategyTest {
         TimeStrategy welshCommonLanguageStrategy = new CommonLanguageStrategy(new Welsh());
 
         LocalTime localTime = LocalTime.of(12, 0);
-        assertEquals("deuddeg o'r gloch", welshCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("hanner dydd", welshCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(23, 0);
         assertEquals("un ar ddeg o'r gloch", welshCommonLanguageStrategy.getTimeInWords(localTime));
@@ -100,7 +100,7 @@ public class WelshCommonLanguageStrategyTest {
         assertEquals("un ar ddeg o'r gloch", welshCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(12, 0);
-        assertEquals("deuddeg o'r gloch", welshCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("hanner dydd", welshCommonLanguageStrategy.getTimeInWords(localTime));
 
     }
 

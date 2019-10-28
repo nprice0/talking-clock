@@ -39,4 +39,14 @@ public class Welsh implements Language {
     public String getOClock() {
         return "o'r gloch";
     }
+
+    @Override
+    public String getMidnight() {
+        return "hanner nos";
+    }
+
+    @Override
+    public String getMidday() {
+        return "hanner dydd";
+    }
 }

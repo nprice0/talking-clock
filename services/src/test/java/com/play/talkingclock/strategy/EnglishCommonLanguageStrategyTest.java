@@ -16,7 +16,7 @@ public class EnglishCommonLanguageStrategyTest {
         TimeStrategy englishCommonLanguageStrategy = new CommonLanguageStrategy(new English());
 
         LocalTime localTime = LocalTime.of(0, 0);
-        assertEquals("twelve o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midnight", englishCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(11, 0);
         assertEquals("eleven o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
@@ -30,7 +30,7 @@ public class EnglishCommonLanguageStrategyTest {
         TimeStrategy englishCommonLanguageStrategy = new CommonLanguageStrategy(new English());
 
         LocalTime localTime = LocalTime.of(12, 0);
-        assertEquals("twelve o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midday", englishCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(23, 0);
         assertEquals("eleven o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
@@ -44,7 +44,7 @@ public class EnglishCommonLanguageStrategyTest {
         TimeStrategy englishCommonLanguageStrategy = new CommonLanguageStrategy(new English());
 
         LocalTime localTime = LocalTime.of(0, 0);
-        assertEquals("twelve o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midnight", englishCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(0, 1);
         assertEquals("one past twelve", englishCommonLanguageStrategy.getTimeInWords(localTime));
@@ -232,7 +232,7 @@ public class EnglishCommonLanguageStrategyTest {
         TimeStrategy englishCommonLanguageStrategy = new CommonLanguageStrategy(new English());
 
         LocalTime localTime = LocalTime.of(0, 0);
-        assertEquals("twelve o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midnight", englishCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(1, 0);
         assertEquals("one o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
@@ -268,7 +268,7 @@ public class EnglishCommonLanguageStrategyTest {
         assertEquals("eleven o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(12, 0);
-        assertEquals("twelve o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midday", englishCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(13, 0);
         assertEquals("one o'clock", englishCommonLanguageStrategy.getTimeInWords(localTime));

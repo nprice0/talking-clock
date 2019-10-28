@@ -9,6 +9,7 @@ Write a command-line program that returns the current time using the "Human Frie
 
 Numeric Time Human Friendly Text -
 
+* 00:00 Midnight
 * 1:00 One o'clock
 * 2:00 Two o'clock
 * 13:00 One o'clock

@@ -16,7 +16,7 @@ public class AmericanCommonLanguageStrategyTest {
         TimeStrategy americanCommonLanguageStrategy = new CommonLanguageStrategy(new American());
 
         LocalTime localTime = LocalTime.of(0, 0);
-        assertEquals("twelve o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midnight", americanCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(11, 0);
         assertEquals("eleven o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
@@ -30,7 +30,7 @@ public class AmericanCommonLanguageStrategyTest {
         TimeStrategy americanCommonLanguageStrategy = new CommonLanguageStrategy(new American());
 
         LocalTime localTime = LocalTime.of(12, 0);
-        assertEquals("twelve o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midday", americanCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(23, 0);
         assertEquals("eleven o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
@@ -44,7 +44,7 @@ public class AmericanCommonLanguageStrategyTest {
         TimeStrategy americanCommonLanguageStrategy = new CommonLanguageStrategy(new American());
 
         LocalTime localTime = LocalTime.of(0, 0);
-        assertEquals("twelve o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midnight", americanCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(0, 1);
         assertEquals("one after twelve", americanCommonLanguageStrategy.getTimeInWords(localTime));
@@ -232,7 +232,7 @@ public class AmericanCommonLanguageStrategyTest {
         TimeStrategy americanCommonLanguageStrategy = new CommonLanguageStrategy(new American());
 
         LocalTime localTime = LocalTime.of(0, 0);
-        assertEquals("twelve o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midnight", americanCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(1, 0);
         assertEquals("one o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
@@ -268,7 +268,7 @@ public class AmericanCommonLanguageStrategyTest {
         assertEquals("eleven o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(12, 0);
-        assertEquals("twelve o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));
+        assertEquals("midday", americanCommonLanguageStrategy.getTimeInWords(localTime));
 
         localTime = LocalTime.of(13, 0);
         assertEquals("one o'clock", americanCommonLanguageStrategy.getTimeInWords(localTime));

@@ -39,4 +39,14 @@ public class American implements Language {
     public String getOClock() {
         return "o'clock";
     }
+
+    @Override
+    public String getMidnight() {
+        return "midnight";
+    }
+
+    @Override
+    public String getMidday() {
+        return "midday";
+    }
 }

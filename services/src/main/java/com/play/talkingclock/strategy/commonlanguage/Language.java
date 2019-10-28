@@ -14,4 +14,8 @@ public interface Language {
 
     public String getOClock();
 
+    public String getMidnight();
+
+    public String getMidday();
+
 }

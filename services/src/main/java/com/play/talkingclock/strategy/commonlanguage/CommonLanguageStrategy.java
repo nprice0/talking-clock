@@ -44,13 +44,22 @@ public class CommonLanguageStrategy implements TimeStrategy {
     @Override
     public String getTimeInWords(LocalTime localTime) {
 
+        String timeAsWords = null;
+
         int minute = localTime.getMinute();
+        int hour = localTime.getHour();
 
-        if (minute == 0)
-            return buildMessage(getHour(localTime), language.getOClock());
+        if (minute == 0) {
+            if (hour == 0)
+                timeAsWords = language.getMidnight();
+            else if (hour == 12)
+                timeAsWords = language.getMidday();
+            else
+                timeAsWords = buildMessage(getHour(localTime), language.getOClock());
+        } else
+            timeAsWords = buildMessage(getMinute(minute), getUnion(minute), getHour(localTime));
 
-        else
-            return buildMessage(getMinute(minute), getHint(minute), getHour(localTime));
+        return timeAsWords;
     }
 
 
@@ -60,7 +69,7 @@ public class CommonLanguageStrategy implements TimeStrategy {
      * @param minute
      * @return
      */
-    private String getHint(int minute) {
+    private String getUnion(int minute) {
         String hint;
 
         if (minute > 30)
