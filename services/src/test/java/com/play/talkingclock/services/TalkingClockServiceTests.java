@@ -1,39 +1,71 @@
 package com.play.talkingclock.services;
 
 import com.play.talkingclock.TalkingClock;
+import com.play.talkingclock.strategy.EnglishBasicStrategy;
+import com.play.talkingclock.strategy.EnglishNaturalLanguageStrategy;
+import com.play.talkingclock.strategy.TimeStrategy;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import org.junit.Assert;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes={TalkingClock.class})
+@ContextConfiguration(classes = {TalkingClock.class})
 public class TalkingClockServiceTests {
 
     @Autowired
     private TalkingClockService talkingClockService;
 
+    @Autowired
+    private Map<String, TimeStrategy> timeStrategyMap;
+
     private static DateTimeFormatter HOURS_MINUTES = DateTimeFormatter.ofPattern("HH:mm");
 
 
     @Test
-    public void testClockServiceHappyPath() {
+    public void testClockServiceHappyPathNoStrategy() {
 
         //Set preferred time as convert to LocalTime object
         String requestedTime = "23:30";
         LocalTime localTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
 
-        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime);
+        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime, null);
 
         Assert.assertEquals("half past eleven", humanFriendlyTime);
         System.out.println(humanFriendlyTime);
+    }
 
+    @Test
+    public void testClockServiceHappyPathEnglishNaturalLanguageStrategy() {
+
+        //Set preferred time as convert to LocalTime object
+        String requestedTime = "23:30";
+        LocalTime localTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
+
+        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime, EnglishNaturalLanguageStrategy.class.getSimpleName());
+
+        Assert.assertEquals("half past eleven", humanFriendlyTime);
+        System.out.println(humanFriendlyTime);
+    }
+
+    @Test
+    public void testClockServiceHappyPathEnglishBasicStrategy() {
+
+        //Set preferred time as convert to LocalTime object
+        String requestedTime = "23:30";
+        LocalTime localTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
+
+        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime, EnglishBasicStrategy.class.getSimpleName());
+
+        Assert.assertEquals("eleven thirty pm", humanFriendlyTime);
+        System.out.println(humanFriendlyTime);
     }
 
     @Test(expected = DateTimeParseException.class)
@@ -43,13 +75,15 @@ public class TalkingClockServiceTests {
         String requestedTime = "27:30";
         LocalTime localTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
 
-        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime);
-
+        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime, null);
 
     }
 
-
-
-
+    @Test
+    public void testConfiguredStrategies() {
+        Assert.assertEquals(timeStrategyMap.size(), 2);
+        Assert.assertTrue(timeStrategyMap.containsKey(EnglishNaturalLanguageStrategy.class.getSimpleName()));
+        Assert.assertTrue(timeStrategyMap.containsKey(EnglishBasicStrategy.class.getSimpleName()));
+    }
 
 }

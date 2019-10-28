@@ -18,19 +18,19 @@ public class TalkingClockController {
 
     @RequestMapping({"/time/{time}"})
     @ResponseStatus(HttpStatus.OK)
-    public TimeIO getTime(@PathVariable(value = "time", required = true) final String time) {
+    public TimeIO getTime(@PathVariable(value = "time", required = true) final String time, @RequestParam(value = "s", required = false) final String timeStrategy) {
 
-        TimeIO  timeIO = getTimeWithParam(time);
+        TimeIO  timeIO = getTimeWithParam(time, timeStrategy);
         return timeIO;
     }
 
     @RequestMapping({"/time", "/time/"})
     @ResponseStatus(HttpStatus.OK)
-    public TimeIO getTimeWithParam(@RequestParam(value = "t", required = false) final String time) {
+    public TimeIO getTimeWithParam(@RequestParam(value = "t", required = false) final String time, @RequestParam(value = "s", required = false) final String timeStrategy) {
 
         LocalTime localTime = StringUtils.isEmpty(time) ? LocalTime.now() : LocalTime.parse(time);
 
-        String translatedTime = talkingClockService.translateToHumanFriendly(localTime);
+        String translatedTime = talkingClockService.translateToHumanFriendly(localTime, timeStrategy);
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         String formattedDate = dateTimeFormatter.format(localTime);

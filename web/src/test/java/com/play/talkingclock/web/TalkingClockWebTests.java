@@ -3,6 +3,8 @@ package com.play.talkingclock.web;
 import com.play.talkingclock.io.CustomErrorResponseIO;
 import com.play.talkingclock.io.TimeIO;
 import com.play.talkingclock.services.TalkingClockService;
+import com.play.talkingclock.strategy.EnglishBasicStrategy;
+import com.play.talkingclock.strategy.EnglishNaturalLanguageStrategy;
 import com.play.talkingclock.web.restful.TalkingClockController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +48,7 @@ public class TalkingClockWebTests {
     @Test
     public void showsDefaultErrorControllerForInvalidPageRequest() throws Exception {
         //Capture the datetime at the start of the date for comparison in assertion
-        LocalDateTime startOfTest=LocalDateTime.now().with(ChronoField.MICRO_OF_SECOND,0L);
+        LocalDateTime startOfTest = LocalDateTime.now().with(ChronoField.MICRO_OF_SECOND, 0L);
 
         //Get the data from the response
         URI url = new URI("http://localhost:" + port + "/");
@@ -54,7 +56,7 @@ public class TalkingClockWebTests {
 
         assertThat(customErrorResponseIO.getMessage()).isEqualTo("No message available");
         assertThat(customErrorResponseIO.getStatus()).isEqualTo(404);
-        assertThat(customErrorResponseIO.getTimestamp()).isBetween(startOfTest,LocalDateTime.now());
+        assertThat(customErrorResponseIO.getTimestamp()).isBetween(startOfTest, LocalDateTime.now());
     }
 
 
@@ -62,7 +64,7 @@ public class TalkingClockWebTests {
     public void handlesInvalidTimeWithPathVariable() throws Exception {
 
         //Capture the datetime at the start of the date for comparison in assertion
-        LocalDateTime startOfTest=LocalDateTime.now().with(ChronoField.MICRO_OF_SECOND,0L);
+        LocalDateTime startOfTest = LocalDateTime.now().with(ChronoField.MICRO_OF_SECOND, 0L);
 
         //Set preferred time as convert to LocalTime object. Force the error message to report against the hour.
         String requestedTime = "25:30";
@@ -70,7 +72,7 @@ public class TalkingClockWebTests {
         //Get the data from the response
         URI url = new URI("http://localhost:" + port + "/time/" + requestedTime);
         RequestEntity<CustomErrorResponseIO> requestEntity = new RequestEntity<>(HttpMethod.GET, url);
-        ResponseEntity<CustomErrorResponseIO> customErrorResponseIO = restTemplate.exchange(requestEntity,CustomErrorResponseIO.class);
+        ResponseEntity<CustomErrorResponseIO> customErrorResponseIO = restTemplate.exchange(requestEntity, CustomErrorResponseIO.class);
 
         //Test the http status response code for a 422 and that it alings with reponse body status code
         assertThat(customErrorResponseIO.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -81,14 +83,14 @@ public class TalkingClockWebTests {
         assertThat(customErrorResponseIO.getBody().getMessage()).isEqualTo("Text '25:30' could not be parsed: Invalid value for HourOfDay (valid values 0 - 23): 25");
 
         //Test the response body time
-        assertThat(customErrorResponseIO.getBody().getTimestamp()).isBetween(startOfTest,LocalDateTime.now());
+        assertThat(customErrorResponseIO.getBody().getTimestamp()).isBetween(startOfTest, LocalDateTime.now());
     }
 
     @Test
     public void handlesInvalidTimeWithUrlParameter() throws Exception {
 
         //Capture the datetime at the start of the date for comparison in assertion
-        LocalDateTime startOfTest=LocalDateTime.now().with(ChronoField.MICRO_OF_SECOND,0L);
+        LocalDateTime startOfTest = LocalDateTime.now().with(ChronoField.MICRO_OF_SECOND, 0L);
 
         //Set preferred time as convert to LocalTime object.  Force the error message to report against the minute.
         String requestedTime = "23:61";
@@ -96,7 +98,7 @@ public class TalkingClockWebTests {
         //Get the data from the response
         URI url = new URI("http://localhost:" + port + "/time?t=" + requestedTime);
         RequestEntity<CustomErrorResponseIO> requestEntity = new RequestEntity<>(HttpMethod.GET, url);
-        ResponseEntity<CustomErrorResponseIO> customErrorResponseIO = restTemplate.exchange(requestEntity,CustomErrorResponseIO.class);
+        ResponseEntity<CustomErrorResponseIO> customErrorResponseIO = restTemplate.exchange(requestEntity, CustomErrorResponseIO.class);
 
         //Test the http status response code for a 422 and that it alings with reponse body status code
         assertThat(customErrorResponseIO.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -107,7 +109,7 @@ public class TalkingClockWebTests {
         assertThat(customErrorResponseIO.getBody().getMessage()).isEqualTo("Text '23:61' could not be parsed: Invalid value for MinuteOfHour (valid values 0 - 59): 61");
 
         //Test the response body time
-        assertThat(customErrorResponseIO.getBody().getTimestamp()).isBetween(startOfTest,LocalDateTime.now());
+        assertThat(customErrorResponseIO.getBody().getTimestamp()).isBetween(startOfTest, LocalDateTime.now());
     }
 
 
@@ -123,7 +125,7 @@ public class TalkingClockWebTests {
         //Convert the response to a LocalTime
         LocalTime currentTimeFromTimePage = LocalTime.parse(timeIO.getNumericTime(), HOURS_MINUTES);
 
-        assertThat(timeIO.getHumanFriendlyTime()).isEqualTo(talkingClockService.translateToHumanFriendly(currentTimeFromTimePage));
+        assertThat(timeIO.getHumanFriendlyTime()).isEqualTo(talkingClockService.translateToHumanFriendly(currentTimeFromTimePage, null));
         assertThat(currentTimeFromTimePage).isBetween(startOfTest, LocalTime.now());
     }
 
@@ -142,7 +144,7 @@ public class TalkingClockWebTests {
         //Convert the response to a LocalTime
         LocalTime currentTimeFromTimePage = LocalTime.parse(timeIO.getNumericTime(), HOURS_MINUTES);
 
-        assertThat(timeIO.getHumanFriendlyTime()).isEqualTo(talkingClockService.translateToHumanFriendly(currentTimeFromTimePage));
+        assertThat(timeIO.getHumanFriendlyTime()).isEqualTo(talkingClockService.translateToHumanFriendly(currentTimeFromTimePage, null));
         assertThat(currentTimeFromTimePage).isEqualTo(requestedLocalTime);
     }
 
@@ -161,7 +163,45 @@ public class TalkingClockWebTests {
         //Convert the response to a LocalTime
         LocalTime currentTimeFromTimePage = LocalTime.parse(timeIO.getNumericTime(), HOURS_MINUTES);
 
-        assertThat(timeIO.getHumanFriendlyTime()).isEqualTo(talkingClockService.translateToHumanFriendly(currentTimeFromTimePage));
+        assertThat(timeIO.getHumanFriendlyTime()).isEqualTo(talkingClockService.translateToHumanFriendly(currentTimeFromTimePage, null));
+        assertThat(currentTimeFromTimePage).isEqualTo(requestedLocalTime);
+    }
+
+    @Test
+    public void showsEnglishBasicStrategyResult() throws Exception {
+
+        //Set preferred time as convert to LocalTime object
+        String requestedTime = "21:45";
+        LocalTime requestedLocalTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
+        String strategyName = EnglishBasicStrategy.class.getSimpleName();
+
+        //Get the data from the response
+        URI url = new URI("http://localhost:" + port + "/time?t=" + requestedTime + "&s=" + strategyName);
+        TimeIO timeIO = restTemplate.getForObject(url, TimeIO.class);
+
+        //Convert the response to a LocalTime
+        LocalTime currentTimeFromTimePage = LocalTime.parse(timeIO.getNumericTime(), HOURS_MINUTES);
+
+        assertThat(timeIO.getHumanFriendlyTime()).isEqualTo("nine forty five pm");
+        assertThat(currentTimeFromTimePage).isEqualTo(requestedLocalTime);
+    }
+
+    @Test
+    public void showsEnglishNaturalLanguageStrategyResult() throws Exception {
+
+        //Set preferred time as convert to LocalTime object
+        String requestedTime = "21:45";
+        LocalTime requestedLocalTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
+        String strategyName = EnglishNaturalLanguageStrategy.class.getSimpleName();
+
+        //Get the data from the response
+        URI url = new URI("http://localhost:" + port + "/time?t=" + requestedTime + "&s=" + strategyName);
+        TimeIO timeIO = restTemplate.getForObject(url, TimeIO.class);
+
+        //Convert the response to a LocalTime
+        LocalTime currentTimeFromTimePage = LocalTime.parse(timeIO.getNumericTime(), HOURS_MINUTES);
+
+        assertThat(timeIO.getHumanFriendlyTime()).isEqualTo("quarter to ten");
         assertThat(currentTimeFromTimePage).isEqualTo(requestedLocalTime);
     }
 

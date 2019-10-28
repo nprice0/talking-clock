@@ -57,16 +57,24 @@ Write a REST service to expose the clock and allow an optional parameter to pass
 #### Execution example
 * Get the current time  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/test`   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"sixteen to twelve","numericTime":"11:44"}`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"sixteen to twelve","numericTime":"11:44"}`   
 
 * Get the time with a given path variable  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time/16:30`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"half past four","numericTime":"16:30"}`  
 
-
 * Get the time with a given query parameter  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"quarter past one","numericTime":"01:15"}`  
+
+* Get the time with a given translation strategy. The following uses EnglishNaturalLanguageStrategy, this is the default.      
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15&s=EnglishNaturalLanguageStrategy`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"quarter past one","numericTime":"01:15"}`  
+
+* Get the time with a given translation strategy.  There following uses EnglishBasicStrategy.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=01:15&s=EnglishBasicStrategy`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{"humanFriendlyTime":"one fifteen am","numericTime":"01:15"}`  
+
 
 * Error handling  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`http://localhost:9090/time?t=99:30`   

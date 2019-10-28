@@ -3,6 +3,7 @@ package com.play.talkingclock;
 import com.play.talkingclock.io.TimeIO;
 import com.play.talkingclock.services.TalkingClockService;
 import com.play.talkingclock.services.TalkingClockServiceImpl;
+import com.play.talkingclock.strategy.EnglishNaturalLanguageStrategy;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -62,7 +63,7 @@ public class TalkingClock {
         else
             displayHelp(posixOptions);
 
-        String translatedTime = talkingClockService.translateToHumanFriendly(localTime);
+        String translatedTime = talkingClockService.translateToHumanFriendly(localTime, EnglishNaturalLanguageStrategy.class.getSimpleName());
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         String formattedDate = dateTimeFormatter.format(localTime);
 
