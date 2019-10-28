@@ -1,4 +1,4 @@
-package com.play.talkingclock;
+package com.play.talkingclock.strategy;
 
 import com.play.talkingclock.strategy.EnglishNaturalLanguageStrategy;
 import com.play.talkingclock.strategy.TimeStrategy;
