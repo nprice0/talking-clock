@@ -67,15 +67,10 @@ public class TalkingClockServiceTests {
         System.out.println(humanFriendlyTime);
     }
 
-    @Test(expected = DateTimeParseException.class)
+    @Test(expected = NullPointerException.class)
     public void testClockServiceException() {
-
-        //Set preferred time as convert to LocalTime object
-        String requestedTime = "27:30";
-        LocalTime localTime = LocalTime.parse(requestedTime, HOURS_MINUTES);
-
-        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(localTime, null);
-
+        //This wont be possible via the application CLI or web interfaces
+        String humanFriendlyTime = talkingClockService.translateToHumanFriendly(null, null);
     }
 
     @Test
