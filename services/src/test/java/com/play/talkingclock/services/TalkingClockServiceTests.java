@@ -3,6 +3,7 @@ package com.play.talkingclock.services;
 import com.play.talkingclock.TalkingClock;
 import com.play.talkingclock.strategy.EnglishBasicStrategy;
 import com.play.talkingclock.strategy.TimeStrategy;
+import com.play.talkingclock.strategy.commonlanguage.languages.LocaleBased;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
@@ -80,6 +80,13 @@ public class TalkingClockServiceTests {
         Assert.assertTrue(timeStrategyMap.containsKey("WelshCommonLanguageStrategy"));
         Assert.assertTrue(timeStrategyMap.containsKey("AmericanCommonLanguageStrategy"));
         Assert.assertTrue(timeStrategyMap.containsKey("EnglishBasicStrategy"));
+    }
+
+    @Test
+    public void testLocale(){
+        LocaleBased localeBased = new LocaleBased("fr");
+
+        System.out.println(localeBased.getAfterThirty());
     }
 
 }

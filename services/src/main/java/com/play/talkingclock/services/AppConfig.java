@@ -5,6 +5,7 @@ import com.play.talkingclock.strategy.TimeStrategy;
 import com.play.talkingclock.strategy.commonlanguage.languages.American;
 import com.play.talkingclock.strategy.commonlanguage.CommonLanguageStrategy;
 import com.play.talkingclock.strategy.commonlanguage.languages.English;
+import com.play.talkingclock.strategy.commonlanguage.languages.LocaleBased;
 import com.play.talkingclock.strategy.commonlanguage.languages.Welsh;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ public class AppConfig {
         TimeStrategy welshCommonLanguageStrategy = new CommonLanguageStrategy(new Welsh());
         TimeStrategy englishBasicStrategy = new EnglishBasicStrategy();
 
+        TimeStrategy frenchLocaleDrivenCommonLanguageStrategy = new CommonLanguageStrategy(new LocaleBased("fr"));
 
         //Add the strategies to the map
         Map<String, TimeStrategy> strategyMap = new LinkedHashMap<>();
@@ -30,6 +32,9 @@ public class AppConfig {
         strategyMap.put(englishCommonLanguageStrategy.getFriendlyStrategyName(), englishCommonLanguageStrategy);
         strategyMap.put(americanCommonLanguageStrategy.getFriendlyStrategyName(), americanCommonLanguageStrategy);
         strategyMap.put(welshCommonLanguageStrategy.getFriendlyStrategyName(), welshCommonLanguageStrategy);
+        strategyMap.put(americanCommonLanguageStrategy.getFriendlyStrategyName(), americanCommonLanguageStrategy);
+
+        strategyMap.put("fr", frenchLocaleDrivenCommonLanguageStrategy);
 
         strategyMap.put(englishBasicStrategy.getFriendlyStrategyName(), englishBasicStrategy);
 
